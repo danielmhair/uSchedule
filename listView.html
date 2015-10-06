@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class="js" lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="./">
+    <title>Creative Angular Application</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    
+    <link rel="stylesheet" href="./assets/libs/bootstrap/bootstrap.min.css">
+	
+    <link rel="stylesheet" href="./assets/css/app.css">
+    <link rel="stylesheet" href="./assets/css/home.css">
+    <link rel="stylesheet" href="./assets/css/footer.css">
+    <link rel="stylesheet" href="./assets/css/navbar.css">
+	<link rel="stylesheet" href="./assets/css/listView.css">    
+    <!-- FONTS -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,300,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:100,200,300,400,700,900" rel="stylesheet" type="text/css">
+	<link rel="shortcut icon" href="./favicon.ico">
+</head>
+<body ng-app="todoApp" ng-controller="todoCtrl">
+<div id="homePage">
+	<!-- START SITE HEADER -->
+	<header class="site-header">
+	  <!-- START NAVIGATION -->
+	  <nav id="navigation" class="navigation site-nav">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a href="/" class="navbar-brand">
+			<h2 class="uHomeTitle">Daniel Hair, Peter West, and Chelsea Ernhofer</h2>
+		  </a>
+		</div>
+	  </nav>
+	  <!-- END NAVIGATION -->
+	</header>
+	<!-- END SITE HEADER -->
+	<div class="marginTop"></div>
+
+
+<!-- FEATURES SECTION -->
+<div class="section cover-background image-khan" id="marginTop" style="height: 500px">
+<!-- START CONTAINER -->
+<div class="container">
+  <div class="row">
+	<div class="col-md-12">		  
+		<div class="item">
+		  <div class="col-md-12">
+			<h1 class="source">{{ title }}</h1>
+		  </div>
+		</div>
+		<div id="sign-in-trello">
+			<p>In order to start, sign into Trello and create a board with lists and cards</p>
+			<button ng-hide="isAuthorized" ng-click="authorize()" class="border-button bt-border-white">
+				<i class="ion-social-twitter"></i>
+				<span class="network-name color-white">Sign into Trello</span>
+			</button>
+		</div>
+	</div>
+  <!-- END ROW -->
+</div>
+<!-- END CONTAINER -->
+<!-- START FOOTER -->
+<footer id="social" class="site-footer">
+	<p class="copyright"><span class="glyphicon glyphicon-copyright-mark"></span> Daniel Hair, Peter West, and Chelsea Ernhofer</p>
+</footer>
+<!-- END FOOTER -->
+
+<script src="./assets/libs/jquery/jquery.min.js"></script>
+<script src="./assets/libs/bootstrap/bootstrap.min.js"></script>
+<script src="./assets/libs/angular/angular.min.js"></script>
+<script src="./assets/js/todoController.js"></script>
+<script src="https://api.trello.com/1/client.js?key=3726a5447af8471903bb47726dd7dcf3"></script>

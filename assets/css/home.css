@@ -1,0 +1,14 @@
+/*****
+OTHER Styles
+*****/
+div#homePage p,
+div#homePage h3,
+div#homePage h2,
+div#homePage {
+  color: white;
+  font-weight: 400;
+}
+
+div#homePage h1 b {
+  font-weight: 500;
+}
