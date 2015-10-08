@@ -35,13 +35,13 @@ myapp.controller('todoCtrl', function ($scope) {
 					.text(board.name)
 					.appendTo("#title-" + board.id);
 				
-				getListsWithCards();
+				getListsWithCards(board);
 				
   			});
   		});
   }
   
-  var getListsWithCards = function() {
+  var getListsWithCards = function(board) {
 	var $lists = $("<div>")
 		.text("Loading Lists...")
 		.appendTo("#" + board.id);
@@ -59,22 +59,22 @@ myapp.controller('todoCtrl', function ($scope) {
 				.attr({ href: list.url, target: "trello" })
 				.text(list.name)
 				.appendTo("#list-title-" + list.id);
-			getCards();
+			getCards(list);
 		}); 
 	}, function(error) { console.log(error); });
   }
   
-  var getCards = function() {
+  var getCards = function(list) {
 	var $cards = $("<div>")
 		.text("Loading Cards...")
 		.appendTo("#" + list.id);
 	Trello.get("lists/" + list.id + "/cards", function(cards) {
-		
+		$cards.empty();
 		$.each(cards, function(ix, card) {
 			$("<div>")
 				.attr({ id: card.id })
 				.addClass("card")
-				.appendTo($lists);
+				.appendTo($cards);
 			$("<p>")
 				.attr({ id: "card-title-" + card.id })
 				.appendTo("#" + card.id); 
