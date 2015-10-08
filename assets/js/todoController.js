@@ -5,6 +5,14 @@ myapp.controller('todoCtrl', function ($scope) {
   $scope.isLoggedIn = Trello.authorized();
   $scope.title = "The New and Improved Todo List";
   
+  $scope.labelNames = {
+	green: "15 minutes",
+	blue: "30 minutes",
+	purple: "45 minutes",
+	orange: "1 hour",
+	red: "More than one hour"
+  };
+  
   var onAuthorize = function() {
   	updateLoggedIn();
   	$("#boards").empty();
@@ -25,9 +33,9 @@ myapp.controller('todoCtrl', function ($scope) {
   			$.each(boards, function(ix, board) {
   				$("<div>")
 					.attr({ id: board.id })
-					.addClass("board")
+					.addClass("board row")
 					.appendTo($boards);
-				$("<h2>")
+				$("<h3>")
 					.attr({ id: "title-" + board.id })
 					.appendTo("#" + board.id); 
 				$("<a>")
@@ -52,7 +60,7 @@ myapp.controller('todoCtrl', function ($scope) {
 				.attr({ id: list.id })
 				.addClass("list")
 				.appendTo($lists);
-			$("<h3>")
+			$("<h4>")
 				.attr({ id: "list-title-" + list.id })
 				.appendTo("#" + list.id); 
 			$("<a>")
@@ -79,9 +87,19 @@ myapp.controller('todoCtrl', function ($scope) {
 				.attr({ id: "card-title-" + card.id })
 				.appendTo("#" + card.id); 
 			$("<a>")
-				.attr({ href: card.url, target: "trello" })
+				.attr({ href: card.url, target: "trello"})
 				.text(card.name)
 				.appendTo("#card-title-" + card.id);
+				
+			//Sort by due date and amount of time
+			//Due date sort
+			
+			//Time remaining sort
+			//Green - 15 minutes
+			//Blue - 30 minutes
+			//Purple - 45 minutes
+			//Orange - 1 hour
+			//Red - More than 1 hour
 		});
 		
 	}, function(error) { console.log(error); });
@@ -120,17 +138,5 @@ myapp.controller('todoCtrl', function ($scope) {
   	Trello.deauthorize();
   	updateLoggedIn();
 	document.getElementById("header").style.display = "none !important";
-};
-  						  
-  //Trello.authorize({
-	//  type: "popup",
-	//  name: "The New and Improved BYU Helper Todo",
-	//  scope: {
-	//	read: true,
-	//	write: true 
-	//  },
-	//  expiration: "never",
-	//  success: onAuthorize
-	//});
-  //
+  };
 });
