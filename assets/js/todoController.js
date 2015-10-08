@@ -2,82 +2,49 @@ var myapp = angular.module('todoApp', []);
 
 
 myapp.controller('todoCtrl', function ($scope) {
-	
-  $scope.isAuthorized = localStorage.getItem('trello_token');
-  $scope.title = "The New and Improved Todo List"
+  $scope.isLoggedIn = Trello.authorized();
+  $scope.title = "The New and Improved Todo List";
   
-  $scope.getBoards = function() {
-	// Get all of the information about the boards you have access to
-	var success = function(successMsg) {
-	  console.log(successMsg);
-	};
-
-	var error = function(errorMsg) {
-	  asyncOutput(errorMsg);
-	};
-
-	Trello.get('/member/me/boards', success, error);
-  }
+  var onAuthorize = function() {
+  	updateLoggedIn();
+  	$("#cards").empty();
+  	console.log("updated login");
+  	Trello.members.get("me", function(member){
+  		$("#fullName").text(member.fullName);
+  		var $cards = $("<div>")
+  			.text("Loading Cards...")
+  			.appendTo("#cards");
+  		// Output a list of all of the cards that the member 
+  		// is assigned to
+  		Trello.get("members/me/cards", function(cards) {
+  			$cards.empty();
+  			$.each(cards, function(ix, card) {
+  				$("<div><a>")
+  				.attr({href: card.url, target: "trello"})
+  				.addClass("card")
+  				.text(card.name)
+  				.appendTo($cards);
+  			});  
+			console.log(cards);
+  		});
+  	});
   
-  $scope.getBoard = function(boardId) {
-	// Get all of the information about the list from a public board
-	var success = function(successMsg) {
-	  console.log(successMsg);
-	  asyncOutput(successMsg);
-	};
-
-	var error = function(errorMsg) {
-	  asyncOutput(errorMsg);
-	};
-
-	Trello.boards.get(boardId, success, error);
-  }
+  };
   
-  $scope.getLists = function(listId) {
-	// Get all of the information about the list from a public board
-	var success = function(successMsg) {
-	  asyncOutput(successMsg);
-	};
-
-	var error = function(errorMsg) {
-	  asyncOutput(errorMsg);
-	};
-
-	Trello.lists.get(listId, success, error);
-  }
-  
-  $scope.getCards = function(cardId) {
-	// Get all of the information about the list from a public board
-	var success = function(successMsg) {
-	  asyncOutput(successMsg);
-	};
-
-	var error = function(errorMsg) {
-	  asyncOutput(errorMsg);
-	};
-
-	Trello.cards.get(cardId, success, error);
-  }
-  
-  $scope.getChecklists = function(cardId) {
-	// Get all of the information about the list from a public board
-	var success = function(successMsg) {
-	  asyncOutput(successMsg);
-	};
-
-	var error = function(errorMsg) {
-	  asyncOutput(errorMsg);
-	};
-
-	Trello.checklists.get(cardId, success, error);
-  }
+  var updateLoggedIn = function() {
+  	var isLoggedIn = Trello.authorized();
+  	$scope.isLoggedIn = isLoggedIn;
+  	$("#loggedout").toggle(!isLoggedIn);
+  	$("#loggedin").toggle(isLoggedIn); 	
+  };
   
   $scope.authorize = function() {
 	var authenticationSuccess = function() { 
-		document.getElementById("sign-in-trello").style.display = 'none';
-		$scope.getBoards();
+		onAuthorize();
 	};
-	var authenticationFailure = function() { console.log("Failed authentication"); };
+	var authenticationFailure = function() { 
+		console.log("Failed authentication"); 
+	};
 	
 	Trello.authorize({
 	  type: "popup",
@@ -91,4 +58,21 @@ myapp.controller('todoCtrl', function ($scope) {
 	  error: authenticationFailure
 	});
   }
+  	
+  $scope.logout = function() {
+  	Trello.deauthorize();
+  	updateLoggedIn();
+  };
+  						  
+  //Trello.authorize({
+	//  type: "popup",
+	//  name: "The New and Improved BYU Helper Todo",
+	//  scope: {
+	//	read: true,
+	//	write: true 
+	//  },
+	//  expiration: "never",
+	//  success: onAuthorize
+	//});
+  //
 });

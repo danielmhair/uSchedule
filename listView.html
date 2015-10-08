@@ -39,6 +39,12 @@
 		  </a>
 		</div>
 	  </nav>
+	  <nav class="navbar navbar-right">
+		  <div id="header">
+			Logged into Trello as <span id="fullName"></span> 
+			<a id="logout" ng-click="logout()">Log Out</a>
+		  </div>	
+	  </nav>
 	  <!-- END NAVIGATION -->
 	</header>
 	<!-- END SITE HEADER -->
@@ -50,19 +56,24 @@
 <!-- START CONTAINER -->
 <div class="container">
   <div class="row">
-	<div class="col-md-12">		  
+	<div class="col-md-12">		  	
 		<div class="item">
 		  <div class="col-md-12">
 			<h1 class="source">{{ title }}</h1>
 		  </div>
 		</div>
-		<div id="sign-in-trello">
+		<div id="loggedout">
 			<p>In order to start, sign into Trello and create a board with lists and cards</p>
-			<button ng-hide="isAuthorized" ng-click="authorize()" class="border-button bt-border-white">
+			<button ng-click="authorize()" class="border-button bt-border-white">
 				<i class="ion-social-twitter"></i>
 				<span class="network-name color-white">Sign into Trello</span>
 			</button>
 		</div>
+		<div id="loggedin">
+			<div id="cards">
+			</div>
+		</div>
+		
 	</div>
   <!-- END ROW -->
 </div>
